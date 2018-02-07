@@ -1,4 +1,4 @@
-Specifications for elevator
+Specifications for elevator v.1.0
 
 Main success scenario
 
@@ -14,8 +14,11 @@ Main success scenario
 	10. Door closes
 
 Extensions
-	2. a: Other user orders elevator in same direction as first user and on the to first order
-		.1 Stop at second user's floor
+	2. a: Other user/users orders elevator in same direction as first user and on the to first order
+		.1 Stop at closest user's floor
+		.2 Open door for 3 seconds
+		.3 close door
+		.4 jump to step 2. a .1
 	
 	2. b: Other user orders elevator in opposite direction of first user or not on route
 		.1 Ignore order until step 10 is complete

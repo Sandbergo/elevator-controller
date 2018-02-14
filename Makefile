@@ -1,32 +1,39 @@
-#include "elev.h"
-#include <stdio.h>
+# Which compiler to use
+CC = clang
+
+# Compiler flags go here.
+CFLAGS = -g -Wall
+
+# Linker flags go here.
+LDFLAGS = -lcomedi -lm
+
+# list of sources
+ELEVSRC = elev.c io.c main.c
+
+# program executable file name.
+TARGET = heis
+
+# top-level rule, to compile everything.
+all: $(TARGET)
+
+# Define all object files.
+ELEVOBJ = $(ELEVSRC:.c=.o)
+
+# rule to link the program
+$(TARGET): $(ELEVOBJ)
+	$(CC) $^ -o $@ $(LDFLAGS)
+
+# Compile: create object files from C source files.
+%.o : %.c
+	$(CC) $(CFLAGS) -c $< -o $@ 
+
+# rule for cleaning re-compilable files.
+clean:
+	rm -f $(TARGET) $(ELEVOBJ)
+
+rebuild:	clean all
+
+.PHONY: all rebuild clean
 
 
-int main() {
-    // Initialize hardware
-    if (!elev_init()) {
-        printf("Unable to initialize elevator hardware!\n");
-        return 1;
-    }
-
-    printf("Press STOP button to stop elevator and exit program.\n");
-
-    elev_set_motor_direction(DIRN_UP);
-
-    while (1) {
-        // Change direction when we reach top/bottom floor
-        if (elev_get_floor_sensor_signal() == N_FLOORS - 1) {
-            elev_set_motor_direction(DIRN_DOWN);
-        } else if (elev_get_floor_sensor_signal() == 0) {
-            elev_set_motor_direction(DIRN_UP);
-        }
-
-        // Stop elevator and exit program if the stop button is pressed
-        if (elev_get_stop_signal()) {
-            elev_set_motor_direction(DIRN_STOP);
-            break;
-        }
-    }
-
-    return 0;
-}
+#Martin Korsgaard, 2006

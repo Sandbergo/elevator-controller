@@ -16,7 +16,8 @@ int main() {
 
     elev_set_motor_direction(DIRN_UP);
     setMotorDir(1);
-  
+    init();    
+ 
     while (1) {
         // Change direction when we reach top/bottom floor
 	if (elev_get_floor_sensor_signal() != -1){
@@ -41,9 +42,7 @@ int main() {
         } 
 
         // Stop elevator and exit program if the stop button is pressed
-        if (elev_get_stop_signal()) {
-            emStop();
-        }
+        emStop(elev_get_stop_signal);
     }
 
     return 0;

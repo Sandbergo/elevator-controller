@@ -4,33 +4,33 @@
 
 
 int getCurrentFloor(){
-								return currentFloor;
+	return currentFloor;
 }
 
 int getPreviousFloor(){
-								return previousFloor;
+	return previousFloor;
 }
 
 int getMotorDir(){
-								return motorDir;
+	return motorDir;
 }
 
 void setMotorDir(int value){
-								motorDir = value;
+	motorDir = value;
 }
 
 void setCurrentFloor(int value){
-								currentFloor = value;
+	currentFloor = value;
 }
 
 void setPreviousFloor(int value){
-								previousFloor = value;
+	previousFloor = value;
 }
 
 void update(){
-								if(currentFloor != previousFloor) {
-																setPreviousFloor(elev_get_floor_sensor_signal());
-																printf("%s%d\n", "Previous: ", previousFloor);
-																printf("%s%d\n\n", "MotorDir: ", getMotorDir());
-								}
+	if(currentFloor != previousFloor) {
+		setPreviousFloor(elev_get_floor_sensor_signal());
+		printf("%s%d\n", "Previous: ", previousFloor);
+		printf("%s%d\n\n", "MotorDir: ", getMotorDir());
+	}
 }

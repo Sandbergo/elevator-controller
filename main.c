@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include "func.h"
 
-int i = 0;
+//git please
 
 int main() {
 	// Initialize hardware

@@ -12,7 +12,7 @@ void setOrdersHigh() {
 			if (elev_get_button_signal(button, floorNum)) {
 				//lamp_channel_matrix[button][floorNum] = 1;
 				//button_channel_matrix[button][floorNum] = 1;
-				elev_set_button_lamp(button, floorNum, 1)
+				elev_set_button_lamp(button, floorNum, 1);
 			}
 		}
 	}

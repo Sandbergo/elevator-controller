@@ -105,8 +105,8 @@ void emStop(int isPushed){
 
 		}
 	}
-	elev_set_stop_lamp(0);
-	elev_set_door_open_lamp(0);
+	//elev_set_stop_lamp(0);
+	//elev_set_door_open_lamp(0);
 
 }
 

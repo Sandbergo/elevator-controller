@@ -70,9 +70,9 @@ void emStop(int isPushed){
 	case RUN:
 		if(isPushed) {
 			currentState = EMERGENCY;
-			elev_set_stop_lamp(0);
-			elev_set_motor_direction;
-			if(elev_floor_sensor_signal() != -1)
+			elev_set_stop_lamp(1);
+			elev_set_motor_direction(0);
+			if(elev_get_floor_sensor_signal() != -1)
 				elev_set_door_open_lamp(1);
 		}
 		break;

@@ -7,11 +7,33 @@
 *.obj
 *.elf
 
+<<<<<<< HEAD
+=======
+# Linker output
+*.ilk
+*.map
+*.exp
+>>>>>>> 6323f02bd140ae379a3aca65de1562e78f37e4b4
 
 # Precompiled Headers
 *.gch
 *.pch
 
+<<<<<<< HEAD
+=======
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+>>>>>>> 6323f02bd140ae379a3aca65de1562e78f37e4b4
 # Executables
 *.exe
 *.out
@@ -19,3 +41,21 @@
 *.i*86
 *.x86_64
 *.hex
+<<<<<<< HEAD
+=======
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+>>>>>>> 6323f02bd140ae379a3aca65de1562e78f37e4b4

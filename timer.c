@@ -21,3 +21,4 @@ int getTimerStatus()
 		return true;
 	}
 	return false;
+}

@@ -3,7 +3,7 @@
 
 static clock_t timerStarted; 
 static int timerActive = 0;
-static long double duration;
+static double duration;
 
 void startTimer(double length)
 {

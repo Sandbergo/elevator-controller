@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "elev.h"
 #include "func.h"
 #include "orders.h"

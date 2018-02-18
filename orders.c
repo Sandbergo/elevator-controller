@@ -13,6 +13,7 @@ void setOrdersHigh() {
 				//lamp_channel_matrix[button][floorNum] = 1;
 				//button_channel_matrix[button][floorNum] = 1;
 				elev_set_button_lamp(button, floorNum, 1);
+				printf("%d%s%d\n", button, " : ", "floorNum\n");
 			}
 		}
 	}

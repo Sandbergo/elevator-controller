@@ -92,7 +92,6 @@ void emStop(int isPushed){
 		}
 		else{
 			if(elev_get_floor_sensor_signal() == -1) {
-				elev_set_stop_lamp(0);
 				currentState = IDLE;
 				elev_set_door_open_lamp(0);
 				printf("%s\n", "Door Closed!\n");

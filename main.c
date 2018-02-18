@@ -5,8 +5,6 @@
 #include "func.h"
 #include "orders.h"
 
-//git please
-
 int main() {
 	// Initialize hardware
 	if (!elev_init()) {
@@ -14,13 +12,12 @@ int main() {
 		return 1;
 	}
 
-	printf("Press STOP button to stop elevator and exit program.\n");
-
 	elev_set_motor_direction(DIRN_UP);
 	setMotorDir(1);
 	init();
 
 	while (1) {
+		setOrdersHigh();
 		// Change direction when we reach top/bottom floor
 		if (elev_get_floor_sensor_signal() != -1) {
 			setCurrentFloor(elev_get_floor_sensor_signal());

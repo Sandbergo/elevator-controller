@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <unistd.h>
+#include "elev.h"
 #include "func.h"
+#include "orders.h"
 
 //----------------VARIABLES-------------
 

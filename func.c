@@ -35,6 +35,7 @@ void setCurrentFloor(int value){
 
 void setPreviousFloor(int value){
 	previousFloor = value;
+
 }
 
 
@@ -53,40 +54,40 @@ void doorOpenClose(){
 }
 
 void emStop(int isPushed){
-	switch(currentState){
-	
+	switch(currentState) {
+
 	case INIT:
 		return;
 
 	case IDLE:
-		if(isPushed){
-		currentState = EMERGENCY;
-		elev_set_stop_lamp(1);
-		elev_set_motor_direction(0);
-		//clearOrders
+		if(isPushed) {
+			currentState = EMERGENCY;
+			elev_set_stop_lamp(1);
+			elev_set_motor_direction(0);
+			//clearOrders
 		}
 		break;
 	case RUN:
-		if(isPushed){
-		currentState = EMERGENCY;
-		elev_set_stop_lamp(0);
-		elev_set_motor_direction;
-		if(elev_floor_sensor_signal() != -1)
-			elev_set_door_open_lamp(1);
+		if(isPushed) {
+			currentState = EMERGENCY;
+			elev_set_stop_lamp(1);
+			elev_set_motor_direction(0);
+			if(elev_get_floor_sensor_signal() != -1)
+				elev_set_door_open_lamp(1);
 		}
 		break;
 	case STOP:
-		if(isPushed){
-		currentState = EMERGENCY;
-		elev_set_stop_lamp(1);
+		if(isPushed) {
+			currentState = EMERGENCY;
+			elev_set_stop_lamp(1);
 		}
 
 	case EMERGENCY:
-		if(isPushed){
-		return;
+		if(isPushed) {
+			return;
 		}
 		else{
-			if(elev_get_floor_sensor_signal() == -1){
+			if(elev_get_floor_sensor_signal() == -1) {
 				elev_set_stop_lamp(0);
 				currentState = IDLE;
 				elev_set_door_open_lamp(0);
@@ -95,32 +96,20 @@ void emStop(int isPushed){
 				elev_set_stop_lamp(0);
 				currentState = STOP;
 				elev_set_door_open_lamp(1);
-				
+
 			}
-		
+
 		}
 	}
-	printf("%s\n","The elevator is in ''Emergency Stop Mode!''");
-	elev_set_motor_direction(0);
-	elev_set_stop_lamp(1);
-	usleep(200000);
-	if(elev_get_floor_sensor_signal() != -1 ){
-		elev_set_door_open_lamp(1);
-	}
-
-	while(!elev_get_stop_signal()){
-		printf("%s\n", "DO NOT PANIC!");
-		usleep(200000);
-	}
-
 	elev_set_stop_lamp(0);
 	elev_set_door_open_lamp(0);
+
 }
 
 void update(){
-	if(currentFloor != previousFloor){
-	    setPreviousFloor(elev_get_floor_sensor_signal());
-	    printf("%s%d\n", "Previous: ", previousFloor);
-            printf("%s%d\n\n", "MotorDir: ", getMotorDir());
+	if(currentFloor != previousFloor) {
+		setPreviousFloor(elev_get_floor_sensor_signal());
+		printf("%s%d\n", "Previous: ", previousFloor);
+		printf("%s%d\n\n", "MotorDir: ", getMotorDir());
 	}
 }

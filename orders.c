@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include "elev.h"
-#include "func.h"
+#include "states.h"
 #include "orders.h"
 
 // update matrix

@@ -15,10 +15,10 @@ void updateOrders() {
 	}
 }
 
-void setOrder(row, col, value){
+void setOrder(int row, int col, int value){
 	orderMatrix(row, col) = value;
 }
 
-int getOrderValue(row, col){
+int getOrderValue(int row, int col){
 	return 0;
 }

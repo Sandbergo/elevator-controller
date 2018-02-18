@@ -1,0 +1,27 @@
+Specifications for elevator v.1.0
+
+Main success scenario
+
+	1. User outside elevator orders elevator up or down
+	2. Elevator takes shortest route to floor
+	3. Elevator arrives
+	4. Door opens for 3 seconds
+	5. Door closes
+	6. Person orders floor
+	7. Elevator takes shortest route to floor	
+	8. Elevator arrives at ordered floor
+	9. Door opens for 3 seconds
+	10. Door closes
+
+Extensions
+	2. a: Other user/users orders elevator in same direction as first user and on the to first order
+		.1 Stop at closest user's floor
+		.2 Open door for 3 seconds
+		.3 close door
+		.4 jump to step 2. a .1
+	
+	2. b: Other user orders elevator in opposite direction of first user or not on route
+		.1 Ignore order until step 10 is complete
+		
+	7. a: User presses emergency stop button
+		.1 Elevator stops

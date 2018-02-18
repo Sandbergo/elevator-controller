@@ -75,9 +75,10 @@ void emStop(int isPushed){
 			elev_set_stop_lamp(1);
 			elev_set_motor_direction(0);
 
-			if(elev_get_floor_sensor_signal() != -1)
+			if(elev_get_floor_sensor_signal() != -1) {
 				elev_set_door_open_lamp(1);
-			printf("%s\n", "Door Open!\n");
+				printf("%s\n", "Door Open!\n");
+			}
 		}
 		break;
 	case STOP:
@@ -94,20 +95,14 @@ void emStop(int isPushed){
 			if(elev_get_floor_sensor_signal() == -1) {
 				currentState = IDLE;
 				elev_set_door_open_lamp(0);
-				printf("%s\n", "Door Closed!\n");
 			}
 			else{
 				elev_set_stop_lamp(0);
 				currentState = STOP;
 				elev_set_door_open_lamp(1);
-
 			}
-
 		}
 	}
-	//elev_set_stop_lamp(0);
-	//elev_set_door_open_lamp(0);
-
 }
 
 void update(){

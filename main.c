@@ -20,6 +20,7 @@ int main() {
 		setOrdersHigh();
 		// Change direction when we reach top/bottom floor
 		if (elev_get_floor_sensor_signal() != -1) {
+			elev_set_floor_indicator(elev_get_floor_sensor_signal());
 			setCurrentFloor(elev_get_floor_sensor_signal());
 			update();
 		}

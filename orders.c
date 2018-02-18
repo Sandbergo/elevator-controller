@@ -11,7 +11,6 @@
 void setOrdersHigh() {
 	for(int button = 0; button < BUTTON_COMMAND; button++) {
 		for(int floorNum = 0; floorNum < N_FLOORS; floorNum++) {
-			printf("%d\n", elev_get_button_signal(button, floorNum));
 			if (elev_get_button_signal(button, floorNum)) {
 				//lamp_channel_matrix[button][floorNum] = 1;
 				//button_channel_matrix[button][floorNum] = 1;

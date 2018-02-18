@@ -5,7 +5,7 @@ static clock_t timerStarted;
 static int timerActive = 0;
 static long double duration;
 
-void tmr_startTimer(double length)
+void startTimer(double length)
 {
 	timerStarted = clock(); 
 	duration = length;

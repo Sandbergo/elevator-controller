@@ -1,5 +1,5 @@
 #pragma once
 
-void tmr_startTimer(double length);
+void startTimer(double length);
 
 int getTimerStatus();

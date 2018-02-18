@@ -91,13 +91,13 @@ void emStop(int isPushed){
 				elev_set_stop_lamp(0);
 				currentState = IDLE;
 				elev_set_door_open_lamp(0);
-				printf("%f\nDoor Open!\n");
+				printf("%f\n", "Door Open!\n");
 			}
 			else{
 				elev_set_stop_lamp(0);
 				currentState = STOP;
 				elev_set_door_open_lamp(1);
-				printf("%f\nDoor Closed!\n");
+				printf("%f\n", "Door Closed!\n");
 			}
 
 		}

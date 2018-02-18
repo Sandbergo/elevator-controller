@@ -9,6 +9,7 @@
 //button_channel_matrix[N_FLOORS][N_BUTTONS];
 
 void setOrdersHigh() {
+	printf("%s\n");
 	for(int button = BUTTON_CALL_UP; button <= BUTTON_COMMAND; button++) {
 		for(int floorNum = 0; floorNum <= N_FLOORS; floorNum++) {
 			printf("%d\n", elev_get_button_signal(button, floorNum));

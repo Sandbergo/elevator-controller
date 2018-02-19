@@ -12,14 +12,14 @@ typedef enum {
 } elevState;
 
 
-//---Variables---
+//---Variables--------
 
 static int currentFloor = -1;
 static int previousFloor = -1;
 static int motorDir = 0;
 
 
-//---functions---
+//---functions--------
 
 void init();
 

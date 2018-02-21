@@ -6,6 +6,7 @@
 #include "channels.h"
 //!!!!!! button, floor??!!!!!!!!!!!!!!!!!!!!!!!!!!!
 int orderMatrix[N_FLOORS][N_BUTTONS] = {{0}};
+int orderList [4] = {0,0,0,0};
 
 void setOrdersHigh() {
 	for(int button = 0; button <= BUTTON_COMMAND; button++) {
@@ -45,4 +46,105 @@ void printOrderMatrix(){
 		printf("\n");
 	}
 	printf("\n");
+}
+
+int isButtonPressed(){
+	for (int i = 0; i < N_FLOORS; i++){
+		for (int j = 0; j < N_BUTTONS; j++){
+			if(orderMatrix[i][j] == 1 ){
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
+
+
+int setDir(){
+	switch(elev_get_floor_sensor_signal()+1){
+		case 0:
+
+			break;
+		case 1:
+			if(orderList[0]-1 > 0){
+				elev_set_motor_direction(1);
+			}
+			else{
+				elev_set_motor_direction(0);
+			} 
+			break;
+		case 2:
+			if(orderList[0]-2 > 0){
+				elev_set_motor_direction(1);
+			}
+			else if(orderList[0]-2 < 0){
+				elev_set_motor_direction(-1);
+			}
+			else {
+				elev_set_motor_direction(0);
+			}
+			break;
+		case 3:
+			if(orderList[0]-3 > 0){
+				elev_set_motor_direction(1);
+			}
+			else if(orderList[0]-3 < 0){
+				elev_set_motor_direction(-1);
+			}
+			else {
+				elev_set_motor_direction(0);
+			}
+
+			break;
+		case 4:
+			if(orderList[0]-4 < 0){
+				elev_set_motor_direction(-1);
+			}
+			else{
+				elev_set_motor_direction(0);
+			} 
+			break;
+	}
+}
+int inList(int list[], int number){
+	for (int i = 0; i < N_FLOORS; i++){
+		if (list[i] == number){
+			return 1;
+		}
+	}
+	return 0;
+
+}
+
+void removeFromOrderList(int floor){
+	for(int i = 0; i < 4; i++){
+		orderList[i] = 0;
+	}
+	flushOrders();
+}
+
+void updateOrderList(){
+	for(int i = 0; i < N_FLOORS; i++){
+		if(orderMatrix[i][2] == 1 && !inList(orderList, i+1)){
+			for(int j = 0; j < 4; j++){
+				if(orderList[j] == 0){
+					orderList[j] = i+1;
+					return;
+				}
+			}
+		}
+		
+	}
+
+}
+
+void printOrderList(){
+	for(int i = 0; i < N_FLOORS; i++){
+		printf("%d\t", orderList[i]);
+	}
+	printf("\n");
+}
+
+int getOrderListZero(){
+	return orderList[0];
 }

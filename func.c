@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
-#include "elev.h"
-#include "states.h"
-#include "orders.h"
+#include "func.h"
 
 //----------------VARIABLES-------------
 
@@ -55,7 +53,6 @@ void doorOpenClose(){
 	printf("%s\n","Door Closed!");
 }
 
-
 void emStop(int isPushed){
 	switch(currentState) {
 
@@ -73,13 +70,10 @@ void emStop(int isPushed){
 	case RUN:
 		if(isPushed) {
 			currentState = EMERGENCY;
-			elev_set_stop_lamp(1);
-			elev_set_motor_direction(0);
-
-			if(elev_get_floor_sensor_signal() != -1) {
+			elev_set_stop_lamp(0);
+			elev_set_motor_direction;
+			if(elev_floor_sensor_signal() != -1)
 				elev_set_door_open_lamp(1);
-				printf("%s\n", "Door Open!\n");
-			}
 		}
 		break;
 	case STOP:
@@ -94,6 +88,7 @@ void emStop(int isPushed){
 		}
 		else{
 			if(elev_get_floor_sensor_signal() == -1) {
+				elev_set_stop_lamp(0);
 				currentState = IDLE;
 				elev_set_door_open_lamp(0);
 			}
@@ -101,18 +96,20 @@ void emStop(int isPushed){
 				elev_set_stop_lamp(0);
 				currentState = STOP;
 				elev_set_door_open_lamp(1);
+
 			}
-			//flushOrders();
+
 		}
 	}
+	elev_set_stop_lamp(0);
+	elev_set_door_open_lamp(0);
+
 }
 
 void update(){
 	if(currentFloor != previousFloor) {
 		setPreviousFloor(elev_get_floor_sensor_signal());
-		printOrderMatrix(); //hjelpeprinting
 		printf("%s%d\n", "Previous: ", previousFloor);
 		printf("%s%d\n\n", "MotorDir: ", getMotorDir());
-
 	}
 }

@@ -9,6 +9,8 @@
 
 int main() {
 	// Initialize hardware
+
+	elevState previousState = IDLE; // nødvendig?
 	if (!elev_init()) {
 		printf("Unable to initialize elevator hardware!\n");
 		return 1;
@@ -19,7 +21,7 @@ int main() {
 	init();
 
 	while (1) {
-		setOrdersHigh(); //sett ordre
+		setOrdersHigh(); //oppdater ordre
 		// Change direction when we reach top/bottom floor
 				
 		
@@ -27,7 +29,12 @@ int main() {
 			elev_set_floor_indicator(elev_get_floor_sensor_signal());
 			setCurrentFloor(elev_get_floor_sensor_signal());
 			update();
+		
+		
+		
+		
 		}
+		//-----------------------MIDLERTIDIG--------------------------//
 		if (elev_get_floor_sensor_signal() == N_FLOORS - 1) {
 			elev_set_motor_direction(DIRN_STOP);
 			setMotorDir(0);
@@ -45,6 +52,7 @@ int main() {
 			setMotorDir(1);
 			sleep(1);
 		}
+		//-----------------------MIDLERTIDIG--------------------------//
 
 		// Stop elevator and exit program if the stop button is pressed
 		emStop(elev_get_stop_signal());

@@ -19,7 +19,9 @@ int main() {
 	while (1) {
 		setOrdersHigh();
 		// Change direction when we reach top/bottom floor
-		if (elev_get_floor_sensor_signal() != -1) {
+				
+		
+		if (elev_get_floor_sensor_signal() != -1) {    //sjekk ordre, viss case emergency eller stopp skal alt ignoreres
 			elev_set_floor_indicator(elev_get_floor_sensor_signal());
 			setCurrentFloor(elev_get_floor_sensor_signal());
 			update();

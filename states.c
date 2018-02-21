@@ -8,13 +8,6 @@
 
 static elevState currentState;
 
-//initialisering, kanskje overflødig
-int currentFloor = -1;
-
-int previousFloor = -1;
-
-int motorDir = 0;
-
 
 //------------GET FUNCTIONS--------------
 

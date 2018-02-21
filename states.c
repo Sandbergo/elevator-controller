@@ -1,12 +1,19 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "elev.h"
-#include "func.h"
+#include "states.h"
 #include "orders.h"
 
 //----------------VARIABLES-------------
 
 static elevState currentState;
+
+//initialisering, kanskje overflødig
+int currentFloor = -1;
+
+int previousFloor = -1;
+
+int motorDir = 0;
 
 
 //------------GET FUNCTIONS--------------

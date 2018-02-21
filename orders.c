@@ -27,7 +27,7 @@ void flushOrders(){ //fjern alle ordre når emergency
 		for(int floorNum = 0; floorNum < N_FLOORS; floorNum++) {
 			if (elev_get_button_signal(button, floorNum)) {
 				orderMatrix[floorNum][button] = 0;
-				elev_set_button_lamp(button, floorNum, 0);
+				elev_set_button_lamp(button, floorNum, 0);//flytt til egen funksjon 
 			}
 		}
 	}

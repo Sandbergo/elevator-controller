@@ -4,6 +4,8 @@
 #include "elev.h"
 #include "states.h"
 #include "orders.h"
+#include "timer.h"
+#include "io.h"
 
 int main() {
 	// Initialize hardware
@@ -17,7 +19,7 @@ int main() {
 	init();
 
 	while (1) {
-		setOrdersHigh();
+		setOrdersHigh(); //sett ordre
 		// Change direction when we reach top/bottom floor
 				
 		
@@ -37,6 +39,7 @@ int main() {
 		} else if (elev_get_floor_sensor_signal() == 0) {
 			elev_set_motor_direction(DIRN_STOP);
 			setMotorDir(0);
+			//startTimer(double length)
 			sleep(3);
 			elev_set_motor_direction(DIRN_UP);
 			setMotorDir(1);
@@ -46,6 +49,5 @@ int main() {
 		// Stop elevator and exit program if the stop button is pressed
 		emStop(elev_get_stop_signal());
 	}
-
 	return 0;
 }

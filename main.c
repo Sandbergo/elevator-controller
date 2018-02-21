@@ -29,7 +29,7 @@ int main() {
 			elev_set_floor_indicator(elev_get_floor_sensor_signal());
 			setCurrentFloor(elev_get_floor_sensor_signal());
 			update();
-			printOrderMatrix(); //hjelpeprinting
+			
 			//---------TODO----------//
 			switch(previousState) {
 				case INIT:
@@ -60,14 +60,17 @@ int main() {
 			elev_set_motor_direction(DIRN_DOWN);
 			setMotorDir(-1);
 			sleep(1);
+			printOrderMatrix(); //hjelpeprinting
 		} else if (elev_get_floor_sensor_signal() == 0) {
 			elev_set_motor_direction(DIRN_STOP);
 			setMotorDir(0);
-			//startTimer(double length)
+			//startTimer(3)
+			//previousState = STOP
 			sleep(3);
 			elev_set_motor_direction(DIRN_UP);
 			setMotorDir(1);
 			sleep(1);
+			printOrderMatrix(); //hjelpeprinting
 		}
 		//-----------------------MIDLERTIDIG--------------------------//
 

@@ -118,5 +118,6 @@ void update(){
 		setPreviousFloor(elev_get_floor_sensor_signal());
 		printf("%s%d\n", "Previous: ", previousFloor);
 		printf("%s%d\n\n", "MotorDir: ", getMotorDir());
+		printOrderMatrix(); //hjelpeprinting
 	}
 }

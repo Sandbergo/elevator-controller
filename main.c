@@ -60,7 +60,6 @@ int main() {
 			elev_set_motor_direction(DIRN_DOWN);
 			setMotorDir(-1);
 			sleep(1);
-			printOrderMatrix(); //hjelpeprinting
 		} else if (elev_get_floor_sensor_signal() == 0) {
 			elev_set_motor_direction(DIRN_STOP);
 			setMotorDir(0);
@@ -70,7 +69,6 @@ int main() {
 			elev_set_motor_direction(DIRN_UP);
 			setMotorDir(1);
 			sleep(1);
-			printOrderMatrix(); //hjelpeprinting
 		}
 		//-----------------------MIDLERTIDIG--------------------------//
 

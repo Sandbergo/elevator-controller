@@ -29,10 +29,27 @@ int main() {
 			elev_set_floor_indicator(elev_get_floor_sensor_signal());
 			setCurrentFloor(elev_get_floor_sensor_signal());
 			update();
-		
-		
-		
-		
+			printOrderMatrix(); //hjelpeprinting
+			//---------TODO----------//
+			switch(previousState) {
+				case INIT:
+					//do nuthin', venter på ordre
+					break;
+				case IDLE:
+					//do nuthin', venter på ordre
+					break;
+				case RUN:
+					//set state til stopp viss det skal stoppes
+					//sett igang timeren på tre sekunder
+					break;
+				case STOP:
+					//sjekk timer, om den er gått ut skal state settes til IDLE
+					break;
+				case EMERGENCY:
+					// do nuthin', skal ikke måtte implementeres
+					break;
+			}
+			//---------TODO----------//
 		}
 		//-----------------------MIDLERTIDIG--------------------------//
 		if (elev_get_floor_sensor_signal() == N_FLOORS - 1) {
@@ -56,6 +73,8 @@ int main() {
 
 		// Stop elevator and exit program if the stop button is pressed
 		emStop(elev_get_stop_signal());
+
+		
 	}
 	return 0;
 }

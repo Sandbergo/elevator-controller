@@ -4,4 +4,6 @@ void startTimer(double length);
 
 int getTimerStatus();
 
-void timerInterrupt();
+void timerDeactivate();
+
+int isTimerActive();

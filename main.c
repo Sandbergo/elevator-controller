@@ -45,16 +45,15 @@ int main() {
 					break;
 				case IDLE:
 					printf("%s\n", "IDLE");
-					updateOrderList();
 					if(isButtonPressed()){
+						setDir(elev_get_floor_sensor_signal());
 						previousState = RUN;
-						setDir();
 					}
 					//do nuthin', venter på ordre
 					break;
 				case RUN:
 					printf("%s\n", "RUN");
-					if(getOrderListZero() == elev_get_floor_sensor_signal() + 1){
+					if(floorIsOrdered(elev_get_floor_sensor_signal())){
 						previousState = STOP;	
 					}
 				
@@ -62,14 +61,19 @@ int main() {
 					//sett igang timeren på tre sekunder
 					break;
 				case STOP:
+					
+					printf("%s\n", "STOP");
 					elev_set_motor_direction(0);
-					removeFromOrderList();
-					printOrderList();
 					printOrderMatrix();
-					startTimer(3);
+					//printOrderMatrix();
+					if(!isTimerActive()){
+						removeFromOrderMatrix(elev_get_floor_sensor_signal());
+						
+						startTimer(3);
+					}
 					if(getTimerStatus()){
 						previousState = IDLE;
-						timerInterrupt();
+						timerDeactivate();
 					}
 					//sjekk timer, om den er gått ut skal state settes til IDLE
 					break;
@@ -77,28 +81,7 @@ int main() {
 					// do nuthin', skal ikke måtte implementeres
 					break;
 			}
-			//---------TODO----------//
 		}
-		//-----------------------MIDLERTIDIG--------------------------//
-		/*if (elev_get_floor_sensor_signal() == N_FLOORS - 1) {
-			elev_set_motor_direction(DIRN_STOP);
-			setMotorDir(0);
-			doorOpenClose();
-			setPreviousFloor(4);
-			elev_set_motor_direction(DIRN_DOWN);
-			setMotorDir(-1);
-			sleep(1);
-		} else if (elev_get_floor_sensor_signal() == 0) {
-			elev_set_motor_direction(DIRN_STOP);
-			setMotorDir(0);
-			//startTimer(3)
-			//previousState = STOP
-			sleep(3);
-			elev_set_motor_direction(DIRN_UP);
-			setMotorDir(1);
-			sleep(1);
-		}*/
-		//-----------------------MIDLERTIDIG--------------------------//
 
 		// Stop elevator and exit program if the stop button is pressed
 		emStop(elev_get_stop_signal());

@@ -24,6 +24,10 @@ int getTimerStatus()
 	return 0;
 }
 
-void timerInterrupt() {
+void timerDeactivate() {
 	timerActive = 0;
+}
+
+int isTimerActive() {
+	return timerActive;
 }

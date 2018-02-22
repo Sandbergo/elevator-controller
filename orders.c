@@ -12,7 +12,7 @@ void setOrdersHigh() {
 		for(int floorNum = 0; floorNum < N_FLOORS; floorNum++) {
 			if (elev_get_button_signal(button, floorNum)) {
 				orderMatrix[button][floorNum] = 1;
-				elev_set_button_lamp(button, floorNum, 1); //flytt til egen funksjon 
+				elev_set_button_lamp(button, floorNum, 1); //flytt til egen funksjon
 			}
 		}
 	}
@@ -27,7 +27,7 @@ void flushOrders(){
 	for(int button = 0; button <= BUTTON_COMMAND; button++) {
 		for(int floorNum = 0; floorNum < N_FLOORS; floorNum++) {
 			orderMatrix[button][floorNum] = 0;
-			elev_set_button_lamp(button, floorNum, 0);//flytt til egen funksjon 
+			elev_set_button_lamp(button, floorNum, 0);//flytt til egen funksjon
 		}
 	}
 }
@@ -45,9 +45,9 @@ void printOrderMatrix(){
 }
 
 int isButtonPressed(){
-	for (int button = 0; button < N_BUTTONS; button++){
-		for (int floorNum = 0; floorNum < N_FLOORS; floorNum++){
-			if(orderMatrix[button][floorNum] == 1 ){
+	for (int button = 0; button < N_BUTTONS; button++) {
+		for (int floorNum = 0; floorNum < N_FLOORS; floorNum++) {
+			if(orderMatrix[button][floorNum] == 1 ) {
 				return 1;
 			}
 		}
@@ -59,9 +59,9 @@ int isButtonPressed(){
 void setDir(int currentFloor){
 	int upOrders = 0;
 	int downOrders = 0;
-	for(int floorNum = 0; floorNum < N_BUTTONS; floorNum++){
-		if(orderMatrix[2][floorNum] == 1){
-			if(currentFloor < floorNum){
+	for(int floorNum = 0; floorNum < N_FLOORS; floorNum++) {
+		if(orderMatrix[2][floorNum] == 1) {
+			if(currentFloor < floorNum) {
 				upOrders++;
 			}
 			else{
@@ -78,12 +78,12 @@ void setDir(int currentFloor){
 	else{
 		elev_set_motor_direction(-1);
 	}
-	
+
 }
 
 int floorIsOrdered(int floorNum){
-	for (int button = 0; button < N_BUTTONS; button++){
-		if (orderMatrix[button][floorNum] == 1){
+	for (int button = 0; button < N_BUTTONS; button++) {
+		if (orderMatrix[button][floorNum] == 1) {
 			return 1;
 		}
 	}
@@ -92,29 +92,8 @@ int floorIsOrdered(int floorNum){
 }
 
 void removeFromOrderMatrix(int floorNum){
-	for (int button = 0; button < N_BUTTONS; button++){
+	for (int button = 0; button < N_BUTTONS; button++) {
 		orderMatrix[button][floorNum] = 0;
 		elev_set_button_lamp(button, floorNum, 0);
 	}
 }
-
-/*
-void updateOrderMatrix(){
-	for(int button = 0; button < N_BUTTONS; button++){
-		for(int floorNum = 0; floorNum < N_FLOORS; floorNum++){
-			if(orderMatrix[i][2] == 1 && !floorIsOrdered(orderMatrix[2], i+1)){
-				for(int j = 0; j < 4; j++){
-					if(orderMatrix[2][j] == 0){
-						orderMatrix[2][j] = i+1;
-						return;
-					}
-				}
-			}
-		}
-	}
-}
-*/
-
-//int getOrderMatrix[2]Zero(){
-//	return orderMatrix[2][0];
-//}

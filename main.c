@@ -27,6 +27,7 @@ int main() {
 	}
 	previousState = IDLE;
 	int previousMainFloor = -1;
+	int emStopState = 0;
 	elev_set_motor_direction(0);
 
 	while (1) {
@@ -87,7 +88,17 @@ int main() {
 		}
 
 		// Stop elevator and exit program if the stop button is pressed
-		emStop(elev_get_stop_signal());
+		if(elev_get_stop_signal()){
+			emStopState = emStop(1);
+			if(emStopState == -1){
+				previousState = IDLE;
+			}
+			else {
+				previousState = STOP;
+			}
+			printf("%s\n", "git out");
+		}
+		//emStopState = emStop(elev_get_stop_signal());
 
 
 	}

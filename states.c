@@ -97,6 +97,7 @@ int emStop(int isPushed){
 	case EMERGENCY:
 	    flushOrders();	
 		while(elev_get_stop_signal()) {
+			elev_set_motor_direction(0);
 			usleep(250000);
 			printf("%s\n", "Emergency!\n");
 		}

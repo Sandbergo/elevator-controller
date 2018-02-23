@@ -26,21 +26,27 @@ int main() {
 		}
 	}
 	previousState = IDLE;
+	int currentFloorLocation = -1;
 	int previousMainFloor = -1;
 	int emStopState = 0;
+	int lastFloorEm = -1;
 	elev_set_motor_direction(0);
 
 	while (1) {
 		setOrdersHigh(); //oppdater ordre
+	
+		currentFloorLocation = elev_get_floor_sensor_signal();
 
-		previousMainFloor = elev_get_floor_sensor_signal();
-
-		if (previousMainFloor != -1) {    //sjekk ordre, viss case emergency eller stopp skal alt ignoreres
-			elev_set_floor_indicator(previousMainFloor);
-			setCurrentFloor(previousMainFloor);
+		if ((currentFloorLocation != -1) || (lastFloorEm != -1)) {    //sjekk ordre, viss case emergency eller stopp skal alt ignoreres
+			if (lastFloorEm != -1) {
+				previousMainFloor = lastFloorEm;
+			}
+			else {
+				previousMainFloor = currentFloorLocation;
+			}
+			
 			update();
 
-			//---------TODO----------//
 			switch(previousState) {
 			case INIT:
 
@@ -58,7 +64,7 @@ int main() {
 				if(floorIsOrdered(previousMainFloor)) {
 					previousState = STOP;
 				}
-
+				lastFloorEm = -1;
 				//set state til stopp viss det skal stoppes
 				//sett igang timeren på tre sekunder
 				break;
@@ -70,7 +76,6 @@ int main() {
 				//printOrderMatrix();
 				if(!isTimerActive() && (elev_get_floor_sensor_signal()!=-1)) {
 					removeFromOrderMatrix(previousMainFloor);
-
 					startTimer(3);
 					elev_set_door_open_lamp(1);
 				}
@@ -92,15 +97,14 @@ int main() {
 			emStopState = emStop(1);
 			if(emStopState == -1){
 				previousState = IDLE;
+				lastFloorEm = previousMainFloor;
+				
 			}
 			else {
 				previousState = STOP;
 			}
 			printf("%s\n", "git out");
 		}
-		//emStopState = emStop(elev_get_stop_signal());
-
-
 	}
 	return 0;
 }

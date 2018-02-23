@@ -35,6 +35,6 @@ void setPreviosFloor(int value);
 
 void setCurrentFloor(int value);
 
-void doorOpenClose();
+//void doorOpenClose();
 
 void emStop();

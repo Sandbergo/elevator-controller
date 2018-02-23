@@ -67,14 +67,16 @@ int main() {
 				elev_set_motor_direction(0);
 				printOrderMatrix();
 				//printOrderMatrix();
-				if(!isTimerActive()) {
+				if(!isTimerActive() && (elev_get_floor_sensor_signal()!=-1)) {
 					removeFromOrderMatrix(previousMainFloor);
 
 					startTimer(3);
+					elev_set_door_open_lamp(1);
 				}
 				if(getTimerStatus()) {
 					previousState = IDLE;
 					timerDeactivate();
+					elev_set_door_open_lamp(0);
 				}
 				//sjekk timer, om den er gått ut skal state settes til IDLE
 				break;

@@ -46,7 +46,7 @@ void setPreviousFloor(int value){
 void init() {
 	currentState = RUN;
 }
-
+/*
 void doorOpenClose(){
 	elev_set_door_open_lamp(1);
 	printf("%s\n","Door Open!");
@@ -54,7 +54,7 @@ void doorOpenClose(){
 	elev_set_door_open_lamp(0);
 	printf("%s\n","Door Closed!");
 }
-
+*/
 
 void emStop(int isPushed){
 	switch(currentState) {
@@ -81,28 +81,33 @@ void emStop(int isPushed){
 				printf("%s\n", "Door Open!\n");
 			}
 		}
+		else {
+			currentState = IDLE;
+		}
 		break;
 	case STOP:
 		if(isPushed) {
 			currentState = EMERGENCY;
 			elev_set_stop_lamp(1);
 		}
+		currentState = IDLE;
 
 	case EMERGENCY:
-		if(isPushed) {
-			return;
+	    flushOrders();	
+		while(elev_get_stop_signal()) {
+			usleep(250000);
+			printf("%s\n", "Emergency!\n");
+		}
+		elev_set_stop_lamp(0);
+		
+		if(elev_get_floor_sensor_signal() == -1) {
+			currentState = IDLE;
+			elev_set_door_open_lamp(0);
 		}
 		else{
-			if(elev_get_floor_sensor_signal() == -1) {
-				currentState = IDLE;
-				elev_set_door_open_lamp(0);
-			}
-			else{
-				elev_set_stop_lamp(0);
-				currentState = STOP;
-				elev_set_door_open_lamp(1);
-			}
-			//flushOrders();
+			elev_set_stop_lamp(0);
+			currentState = STOP;
+			elev_set_door_open_lamp(1);
 		}
 	}
 }

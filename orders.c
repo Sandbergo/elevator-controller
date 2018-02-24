@@ -4,7 +4,7 @@
 #include "states.h"
 #include "orders.h"
 #include "channels.h"
-//!!!!!! button, floor??!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 int orderMatrix[N_BUTTONS][N_FLOORS] = {{0}};
 
 void setOrdersHigh() {
@@ -18,16 +18,11 @@ void setOrdersHigh() {
 	}
 }
 
-void updateLights() {
 
-}
-
-//fjern alle ordre når emergency
-void flushOrders(){
+void flushOrders(){ //fjern alle ordre når emergency
 	for(int button = 0; button <= BUTTON_COMMAND; button++) {
 		for(int floorNum = 0; floorNum < N_FLOORS; floorNum++) {
 			orderMatrix[button][floorNum] = 0;
-			elev_set_button_lamp(button, floorNum, 0);//flytt til egen funksjon
 		}
 	}
 }
@@ -55,10 +50,12 @@ int isButtonPressed(){
 	return 0;
 }
 
-
-void setDir(int currentFloor){
+void setDir(int currentFloor, int direction){
+	
 	int upOrders = 0;
 	int downOrders = 0;
+	
+	//sjekk heispanel, gjøres uansett
 	for(int floorNum = 0; floorNum < N_FLOORS; floorNum++) {
 		if(orderMatrix[2][floorNum] == 1) {
 			if(currentFloor < floorNum) {
@@ -69,6 +66,50 @@ void setDir(int currentFloor){
 			}
 		}
 	}
+
+	if(direction == 0){ // legg til alle ordre uavhengig om de er oppover eller nedover
+		for (int button = 0; button < N_BUTTONS; button++) {
+			for(int floorNum = currentFloor + 1; floorNum < N_FLOORS; floorNum++) {
+				if(orderMatrix[button][floorNum] == 1) {
+					if(currentFloor < floorNum) {
+						upOrders++;
+					}
+					else{
+						downOrders++;
+					}
+				}
+			}
+		}
+	}
+	
+	/*
+	else if(direction == 1){ // legg til bestillinger for etasjer over current etasje viss de er oppover
+		for(int floorNum = currentFloor + 1; floorNum < N_FLOORS; floorNum++) {
+			if(orderMatrix[1][floorNum] == 1) {
+				if(currentFloor < floorNum) {
+					upOrders++;
+				}
+				else{
+					downOrders++;
+				}
+			}
+		}
+	}
+
+	else if(direction == -1){ // legg til bestillinger for etasjer under current etasje viss de er nedover
+		for(int floorNum = 0; floorNum < currentFloor; floorNum++) {
+			if(orderMatrix[0][floorNum] == 1) {
+				if(currentFloor < floorNum) {
+					upOrders++;
+				}
+				else{
+					downOrders++;
+				}
+			}
+		}
+	}
+	*/
+	
 	if(!upOrders && !downOrders) {
 		return;
 	}
@@ -78,8 +119,8 @@ void setDir(int currentFloor){
 	else{
 		elev_set_motor_direction(-1);
 	}
-
 }
+
 
 int floorIsOrdered(int floorNum){
 	for (int button = 0; button < N_BUTTONS; button++) {
@@ -90,6 +131,7 @@ int floorIsOrdered(int floorNum){
 	return 0;
 
 }
+
 
 void removeFromOrderMatrix(int floorNum){
 	for (int button = 0; button < N_BUTTONS; button++) {

@@ -36,3 +36,5 @@ void setPreviosFloor(int value);
 void setCurrentFloor(int value);
 
 int emStop();
+
+void update();

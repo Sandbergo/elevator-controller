@@ -11,6 +11,8 @@ static elevState currentState;
 
 //------------GET FUNCTIONS--------------
 
+// ingen av disse brukes - fjern eller endre main?
+
 int getCurrentFloor(){
 	return currentFloor;
 }
@@ -26,6 +28,7 @@ int getMotorDir(){
 
 //------------SET FUNCTIONS--------------
 
+//ingen av disse brukes - fjern eller endre main?
 
 void setMotorDir(int value){
 	motorDir = value;
@@ -46,15 +49,6 @@ void setPreviousFloor(int value){
 void init() {
 	currentState = RUN;
 }
-/*
-void doorOpenClose(){
-	elev_set_door_open_lamp(1);
-	printf("%s\n","Door Open!");
-	sleep(3);
-	elev_set_door_open_lamp(0);
-	printf("%s\n","Door Closed!");
-}
-*/
 
 int emStop(int isPushed){
 	switch(currentState) {
@@ -68,7 +62,6 @@ int emStop(int isPushed){
 			elev_set_stop_lamp(1);
 			elev_set_motor_direction(0);
 			printf("%s\n", "IDLE!\n");
-			//clearOrders
 		}
 		break;
 	case RUN:
@@ -96,11 +89,13 @@ int emStop(int isPushed){
 
 	case EMERGENCY:
 	    flushOrders();	
+		
 		while(elev_get_stop_signal()) {
 			elev_set_motor_direction(0);
 			usleep(250000);
 			printf("%s\n", "Emergency!\n");
 		}
+
 		elev_set_stop_lamp(0);
 		
 		if(elev_get_floor_sensor_signal() == -1) {
@@ -115,7 +110,7 @@ int emStop(int isPushed){
 			return 1;
 		}
 	}
-	return -1;
+	return -1; // safety
 }
 
 void update(){

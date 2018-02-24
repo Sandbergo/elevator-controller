@@ -29,6 +29,7 @@ int main() {
 	int previousMainFloor = -1;
 	int emStopState = 0; // nødvendig??
 	int lastFloorEm = -1;
+	
 	elev_set_motor_direction(0);
 
 	while (1) {
@@ -45,16 +46,18 @@ int main() {
 				previousMainFloor = currentFloorLocation;
 			}
 			
+			elev_set_floor_indicator(previousMainFloor);
+			
 			update();
 
 			switch(previousState) {
-			
+	
 			case INIT:
 				break; // vil ikke skje
 			case IDLE:
 				printf("%s\n", "IDLE");
 				if(isButtonPressed()) {
-					setDir(previousMainFloor);
+					setDir(previousMainFloor, 0); // set inn motor direction
 					previousState = RUN;
 				}
 				

@@ -23,6 +23,7 @@ void flushOrders(){ //fjern alle ordre når emergency
 	for(int button = 0; button <= BUTTON_COMMAND; button++) {
 		for(int floorNum = 0; floorNum < N_FLOORS; floorNum++) {
 			orderMatrix[button][floorNum] = 0;
+			elev_set_button_lamp(button, floorNum, 0);
 		}
 	}
 }
@@ -68,8 +69,8 @@ void setDir(int currentFloor, int direction){
 	}
 
 	if(direction == 0){ // legg til alle ordre uavhengig om de er oppover eller nedover
-		for (int button = 0; button < N_BUTTONS; button++) {
-			for(int floorNum = currentFloor + 1; floorNum < N_FLOORS; floorNum++) {
+		for (int button = 0; button < N_BUTTONS - 1; button++) {
+			for(int floorNum = 0; floorNum < N_FLOORS; floorNum++) {
 				if(orderMatrix[button][floorNum] == 1) {
 					if(currentFloor < floorNum) {
 						upOrders++;
@@ -109,7 +110,7 @@ void setDir(int currentFloor, int direction){
 		}
 	}
 	*/
-	
+
 	if(!upOrders && !downOrders) {
 		return;
 	}

@@ -9,81 +9,49 @@
 static elevState currentState;
 
 
-//------------GET FUNCTIONS--------------
-
-// ingen av disse brukes - fjern eller endre main?
-
-int getCurrentFloor(){
-	return currentFloor;
-}
-
-int getPreviousFloor(){
-	return previousFloor;
-}
-
-int getMotorDir(){
-	return motorDir;
-}
-
-
-//------------SET FUNCTIONS--------------
-
-//ingen av disse brukes - fjern eller endre main?
-
-void setMotorDir(int value){
-	motorDir = value;
-}
-
-void setCurrentFloor(int value){
-	currentFloor = value;
-}
-
-void setPreviousFloor(int value){
-	previousFloor = value;
-
-}
-
-
 //-------------Other------------------
 
 void init() {
 	currentState = RUN;
+	if (elev_get_floor_sensor_signal() == -1) {
+		elev_set_motor_direction(1);
+		while(elev_get_floor_sensor_signal() == -1) {
+		}
+	}
+	elev_set_motor_direction(0);
 }
 
-int emStop(int isPushed){
+int emStop(){
 	switch(currentState) {
 
 	case INIT:
 		return 0;
 
 	case IDLE:
-		if(isPushed) {
-			currentState = EMERGENCY;
-			elev_set_stop_lamp(1);
-			elev_set_motor_direction(0);
-			printf("%s\n", "IDLE!\n");
-		}
+		currentState = EMERGENCY;
+		elev_set_stop_lamp(1);
+		elev_set_motor_direction(0);
+	
 		break;
 	case RUN:
-		if(isPushed) {
-			currentState = EMERGENCY;
-			elev_set_stop_lamp(1);
-			elev_set_motor_direction(0);
+	
+		currentState = EMERGENCY;
+		elev_set_stop_lamp(1);
+		elev_set_motor_direction(0);
 
-			if(elev_get_floor_sensor_signal() != -1) {
-				elev_set_door_open_lamp(1);
-				printf("%s\n", "Door Open!\n");
-			}
+		if(elev_get_floor_sensor_signal() != -1) {
+			elev_set_door_open_lamp(1);
 		}
+	
 		else {
 			currentState = IDLE;
 		}
 		break;
 	case STOP:
-		if(isPushed) {
-			currentState = EMERGENCY;
-			elev_set_stop_lamp(1);
-		}
+	
+		currentState = EMERGENCY;
+		elev_set_stop_lamp(1);
+
 		currentState = IDLE;
 		break;
 
@@ -93,7 +61,6 @@ int emStop(int isPushed){
 		while(elev_get_stop_signal()) {
 			elev_set_motor_direction(0);
 			usleep(250000);
-			printf("%s\n", "Emergency!\n");
 		}
 
 		elev_set_stop_lamp(0);
@@ -111,14 +78,4 @@ int emStop(int isPushed){
 		}
 	}
 	return -1; // safety
-}
-
-void update(){
-	if(currentFloor != previousFloor) {
-		setPreviousFloor(elev_get_floor_sensor_signal());
-		printOrderMatrix(); //hjelpeprinting
-		printf("%s%d\n", "Previous: ", previousFloor);
-		printf("%s%d\n\n", "MotorDir: ", getMotorDir());
-
-	}
 }

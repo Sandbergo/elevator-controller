@@ -10,8 +10,8 @@ int isButtonPressed();
 
 void updateOrderList();
 
-int floorIsOrdered(int floorNum);
+int floorIsOrdered(int floorNum, int motorDir);
 
 void removeFromOrderMatrix(int floorNum);
 
-void setDir(int currentFloor, int direction);
+int setDir(int currentFloor, int direction);

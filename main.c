@@ -29,6 +29,7 @@ int main() {
 	int previousMainFloor = -1;
 	int emStopState = 0; // nødvendig??
 	int lastFloorEm = -1;
+	int motorDir = 0;
 	
 	elev_set_motor_direction(0);
 
@@ -57,14 +58,16 @@ int main() {
 			case IDLE:
 				printf("%s\n", "IDLE");
 				if(isButtonPressed()) {
-					setDir(previousMainFloor, 0); // set inn motor direction
+					motorDir = setDir(previousMainFloor, motorDir);
+					elev_set_motor_direction(motorDir); // set inn motor direction
 					previousState = RUN;
 				}
 				
 				break;
 			case RUN:
 				printf("%s\n", "RUN");
-				if(floorIsOrdered(previousMainFloor)) {
+				printf("%d\n", motorDir);
+				if(floorIsOrdered(previousMainFloor, motorDir)) {
 					previousState = STOP;
 				}
 				lastFloorEm = -1; // gyldig tilstand
@@ -73,7 +76,8 @@ int main() {
 			case STOP:
 
 				printf("%s\n", "STOP");
-				elev_set_motor_direction(0);
+				elev_set_motor_direction(0); 
+				motorDir = 0;
 				printOrderMatrix();
 				
 				//sjekk timer, om den er gått ut skal state settes til IDLE

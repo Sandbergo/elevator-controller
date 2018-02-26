@@ -16,7 +16,7 @@ typedef enum {
 
 static int currentFloor = -1;
 static int previousFloor = -1;
-static int motorDir = 0;
+//static int motorDir = 0;
 
 
 //---functions--------

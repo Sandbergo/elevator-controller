@@ -57,10 +57,8 @@ int emStop(){
 
 	case EMERGENCY:
 	    flushOrders();	
-		
+		elev_set_motor_direction(0);
 		while(elev_get_stop_signal()) {
-			elev_set_motor_direction(0);
-			usleep(250000);
 		}
 
 		elev_set_stop_lamp(0);

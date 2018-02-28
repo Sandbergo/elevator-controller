@@ -5,6 +5,7 @@ static clock_t timerStarted; // tidspunkt timeren startes
 static int timerActive = 0; //om timeren er aktiv
 static double duration; // varighet for timeren
 
+
 void startTimer(double length) {
 	timerStarted = clock(); 
 	duration = length;
@@ -20,9 +21,11 @@ int getTimerStatus() { // returnerer 1 om timeren er gått ut
 	return 0;
 }
 
+
 void timerDeactivate() {
 	timerActive = 0;
 }
+
 
 int isTimerActive() {
 	return timerActive;

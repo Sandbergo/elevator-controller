@@ -13,6 +13,7 @@ static int previousMainFloor = -1;
 static int lastFloorAfterEmergency = -1;
 static int motorDirection = 0;
 
+
 //----------------FUNKSJONER-------------
 void stateController() {
 		setOrdersHigh(); //oppdater ordre
@@ -56,9 +57,14 @@ void stateController() {
 					
 					//sjekk timer, om den er gått ut skal state settes til IDLE
 					if(!isTimerActive() && (elev_get_floor_sensor_signal()!=-1)) {
-						removeFromOrderMatrix(previousMainFloor);
 						startTimer(3);
 						elev_set_door_open_lamp(1);
+					}
+					if(isTimerActive() == 1){
+						if(floorIsOrdered(previousMainFloor, motorDirection)){
+							startTimer(3);
+							removeFromOrderMatrix(previousMainFloor);
+						}	
 					}
 					if(getTimerStatus()) {
 						previousState = IDLE;

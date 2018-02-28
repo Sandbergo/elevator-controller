@@ -5,6 +5,7 @@
 
 int orderMatrix[N_BUTTONS][N_FLOORS] = {{0}}; // ordrematrise
 
+
 void setOrdersHigh() {
 	for(int button = 0; button <= BUTTON_COMMAND; button++) {
 		for(int floorNum = 0; floorNum < N_FLOORS; floorNum++) {

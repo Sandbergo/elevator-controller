@@ -3,8 +3,6 @@
 #include "states.h"
 
 
-
-
 int main() {
 	
 	// Initialize hardware

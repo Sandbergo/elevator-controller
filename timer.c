@@ -1,24 +1,20 @@
 #include "timer.h"
-#include <stdio.h>
 #include <time.h>
 
-static clock_t timerStarted; 
-static int timerActive = 0;
-static double duration;
+static clock_t timerStarted; // tidspunkt timeren startes
+static int timerActive = 0; //om timeren er aktiv
+static double duration; // varighet for timeren
 
-void startTimer(double length)
-{
+void startTimer(double length) {
 	timerStarted = clock(); 
 	duration = length;
 	timerActive = 1;
 }
 
 
-int getTimerStatus()
-{
-	long double deltaTime = (long double)(clock() - timerStarted) / (CLOCKS_PER_SEC);
-	if (deltaTime >= duration && timerActive)
-	{
+int getTimerStatus() { // returnerer 1 om timeren er gått ut
+	long double deltaTime = (long double)(clock() - timerStarted) / (CLOCKS_PER_SEC); 
+	if (deltaTime >= duration && timerActive) {
 		return 1;
 	}
 	return 0;

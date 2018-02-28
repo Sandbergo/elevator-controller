@@ -1,27 +1,108 @@
-#include <stdio.h>
-#include <unistd.h>
 #include "elev.h"
 #include "states.h"
 #include "orders.h"
+#include "timer.h"
 
-//----------------VARIABLES-------------
+//----------------VARIABLER-------------
 
-static elevState currentState;
+static elevState currentState = INIT;
+static elevState previousState = INIT;
+
+static int currentFloorLocation = -1;
+static int previousMainFloor = -1;
+static int lastFloorAfterEmergency = -1;
+static int motorDirection = 0;
+
+//----------------FUNKSJONER-------------
+void stateController() {
+		setOrdersHigh(); //oppdater ordre
+		currentFloorLocation = elev_get_floor_sensor_signal();
+
+		//sjekk ordre, viss case emergency eller stopp skal alt ignoreres
+		if ((currentFloorLocation != -1) || (lastFloorAfterEmergency != -1)) {    
+			if (lastFloorAfterEmergency != -1) {
+				previousMainFloor = lastFloorAfterEmergency;
+			}
+			else {
+				previousMainFloor = currentFloorLocation;
+			}
+			
+			elev_set_floor_indicator(previousMainFloor);
+
+			switch(previousState) {
+	
+				case INIT:
+					break; // vil ikke skje
+
+				case IDLE:
+					if(isButtonPressed()) {
+						motorDirection = setDirection(previousMainFloor, motorDirection);
+						elev_set_motor_direction(motorDirection); // set inn motor direction
+						previousState = RUN;
+					}		
+					break;
+
+				case RUN:
+					if(floorIsOrdered(previousMainFloor, motorDirection)) {
+						previousState = STOP;
+					}
+					lastFloorAfterEmergency = -1; // gyldig tilstand	
+					break;
+
+				case STOP:
+
+					elev_set_motor_direction(0); 
+					motorDirection = 0;
+					
+					//sjekk timer, om den er gått ut skal state settes til IDLE
+					if(!isTimerActive() && (elev_get_floor_sensor_signal()!=-1)) {
+						removeFromOrderMatrix(previousMainFloor);
+						startTimer(3);
+						elev_set_door_open_lamp(1);
+					}
+					if(getTimerStatus()) {
+						previousState = IDLE;
+						timerDeactivate();
+						elev_set_door_open_lamp(0);
+					}	
+					break;
+
+				case EMERGENCY:
+					// do nuthin', skal ikke måtte implementeres
+					break;
+			}
+		}
+
+		// Stopp-knapp skal sette til emergency
+		if(elev_get_stop_signal()){
+		
+			if(emergencyStopHandler() == -1){ // viss stopp mellom etasjer
+				previousState = IDLE;
+				lastFloorAfterEmergency = previousMainFloor;
+			}
+			else {
+				previousState = STOP;
+			}
+		}
+}
 
 
-//-------------Other------------------
-
-void init() {
-	currentState = RUN;
+void initStates() {
+	//kjør til en etasje
 	if (elev_get_floor_sensor_signal() == -1) {
 		elev_set_motor_direction(1);
 		while(elev_get_floor_sensor_signal() == -1) {
 		}
 	}
+	// stopp, sett i IDLE
 	elev_set_motor_direction(0);
+	previousState = IDLE;
+	currentState = IDLE;
 }
 
-int emStop(){
+
+int emergencyStopHandler(){	
+	
 	switch(currentState) {
 
 	case INIT:
@@ -56,19 +137,20 @@ int emStop(){
 		break;
 
 	case EMERGENCY:
-	    flushOrders();	
+	    flushOrders();	// slett ordre
 		elev_set_motor_direction(0);
 		while(elev_get_stop_signal()) {
+			// busy loop mens kanppen holdes
 		}
 
 		elev_set_stop_lamp(0);
 		
-		if(elev_get_floor_sensor_signal() == -1) {
+		if(elev_get_floor_sensor_signal() == -1) { //viss stopp mellom etasjer
 			currentState = IDLE;
 			elev_set_door_open_lamp(0);
 			return -1;	
 		}
-		else{
+		else{ // viss stopp i etasje
 			elev_set_stop_lamp(0);
 			currentState = STOP;
 			elev_set_door_open_lamp(1);

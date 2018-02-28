@@ -1,17 +1,13 @@
 #pragma once
 
-void setOrdersHigh();
+void setOrdersHigh(); // iterer gjennom knappene og sett matriseverdi høy viss en knapp er trykket inn
 
-void printOrderMatrix();
+void flushOrders(); // fjern alle ordre og skru av lys
 
-void flushOrders();
+int isButtonPressed(); // returner 1 om en av ordreknappene er trykket, 0 ellers
 
-int isButtonPressed();
+int floorIsOrdered(int floorNum, int motorDir); // sjekk om vi skal stoppe i etasjen, returner 1 for ja
 
-void updateOrderList();
+void removeFromOrderMatrix(int floorNum); // fjern etasje fra ordrelista, skru av lys
 
-int floorIsOrdered(int floorNum, int motorDir);
-
-void removeFromOrderMatrix(int floorNum);
-
-int setDir(int currentFloor, int direction);
+int setDirection(int currentFloor, int direction); // bestem hvilken retning som skal kjøres

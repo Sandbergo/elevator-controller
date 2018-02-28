@@ -2,8 +2,8 @@
 
 void startTimer(double length);
 
-int getTimerStatus();
+int getTimerStatus(); // returnerer 1 om timeren er gått ut
 
-void timerDeactivate();
+void timerDeactivate(); // avbryt timer
 
-int isTimerActive();
+int isTimerActive(); // returner 1 om timeren er aktivert

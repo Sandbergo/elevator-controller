@@ -1,5 +1,6 @@
 #pragma once
 
+
 //-----------STATE-----------
 
 typedef enum {
@@ -14,6 +15,8 @@ typedef enum {
 
 //---functions--------
 
-void init();
+void initStates(); // initialiser states og kjør til etasje
 
-int emStop();
+int emergencyStopHandler(); // håndterer emergency stopp
+
+void stateController(); // heiskontrollerer

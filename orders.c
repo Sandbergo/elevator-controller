@@ -53,11 +53,16 @@ int isButtonPressed(){
 }
 
 
-int setDir(int currentFloor, int direction){
+int setDir(int currentFloor, int lastDirection){
 	
 	assert(currentFloor >= 0);
     assert(currentFloor < N_FLOORS);
-	
+
+	if(elev_get_floor_sensor_signal() == -1){
+		(float) currentFloor;
+		currentFloor = currentFloor + lastDirection/2.0;
+	}
+
 	int upOrders = 0;
 	int downOrders = 0;
 	

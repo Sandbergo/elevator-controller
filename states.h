@@ -19,4 +19,4 @@ void initStates(); // initialiser states og kjør til etasje
 
 int emergencyStopHandler(); // håndterer emergency stopp
 
-void stateController(); // heiskontrollerer
+void stateController(); // styrer heis basert på nåværende og forrige tilstand

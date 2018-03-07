@@ -1,0 +1,10 @@
+Scenario for the sequence diagram
+
+  1. Elevator is initialized
+  2. Elevator is ordered to a different floor from the current location
+  3. the elevator drives to location
+  4. Elevator stops
+  4. Door opens
+  5. Door closes
+  6. Emergency button is pressed
+  7. The program is terminated

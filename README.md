@@ -11,8 +11,6 @@
 | 30/30           | 13/14        | 7/10          | 
 
 
-~ Lars Sandberg, Henrik Abrahamsen, Gustav Often.
-
 ### Contributors:
  - Lars Sandberg ([sandbergo](https://github.com/sandbergo))
  - Henrik Abrahamsen ([Lam3name](https://github.com/Lam3name)) 

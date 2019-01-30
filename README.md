@@ -1,15 +1,19 @@
 # TTK4235
-Elevator Project: Embedded Systems, NTNU Spring 2018.
+### Elevator Project: Embedded Systems, NTNU Spring 2018.
 
 
 
-Evaluation: 
+### Evaluation: 
  
-  - Acceptance test: 30/30
-  
-  - Code quality: 13/14
-  
-  - Documentation: 7/10
+
+| Acceptance test | Code quality | Documentation |
+| --------------- | ------------ | ------------- | 
+| 30/30           | 13/14        | 7/10          | 
 
 
 ~ Lars Sandberg, Henrik Abrahamsen, Gustav Often.
+
+### Contributors:
+ - Lars Sandberg ([sandbergo](https://github.com/sandbergo))
+ - Henrik Abrahamsen ([Lam3name](https://github.com/	Lam3name)) 
+ - Gustav Often ([GustavOften](https://github.com/GustavOften))

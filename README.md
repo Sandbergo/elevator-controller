@@ -15,5 +15,5 @@
 
 ### Contributors:
  - Lars Sandberg ([sandbergo](https://github.com/sandbergo))
- - Henrik Abrahamsen ([Lam3name](https://github.com/	Lam3name)) 
+ - Henrik Abrahamsen ([Lam3name](https://github.com/Lam3name)) 
  - Gustav Often ([GustavOften](https://github.com/GustavOften))
